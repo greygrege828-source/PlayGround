@@ -170,7 +170,8 @@
   function escapeHtml(text) { return text.replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch]); }
   function unlockOwner(event) {
     event.preventDefault();
-    if ($('ownerCode').value.trim() === '2257') {
+    const code = $('ownerCode').value.trim().toLowerCase();
+    if (['2257', 'riparmypika'].includes(code)) {
       $('ownerControls').classList.remove('hidden'); $('ownerLocked').classList.add('hidden');
       $('codeMessage').textContent = 'Access granted. Welcome to the owner’s oven!'; $('codeMessage').style.color = '#718a76';
       $('ownerCode').value = ''; showToast('Owner controls unlocked!');
