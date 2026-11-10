@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+  <meta name="theme-color" content="#101a20" />
+  <title>LAST DROP — Battle Royale</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main id="game-shell" class="menu" aria-label="Last Drop battle royale game">
+    <canvas id="game" aria-label="Game battlefield"></canvas>
+    <div class="vignette"></div>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Last Drop home"><span class="brand-mark"><i></i><i></i><i></i></span><span>LAST<span class="brand-light">DROP</span></span></a>
+      <div class="match-tag"><span class="live-dot"></span> SOLO · ISLAND 07</div>
+      <button class="sound-btn" id="sound-btn" aria-label="Toggle sound"><span id="sound-icon">♪</span></button>
+    </header>
+    <section class="game-hud" id="game-hud" aria-live="polite">
+      <div class="hud-left">
+        <div class="survivors"><span class="survivor-icon">♙</span><strong id="alive-count">12</strong><span>ALIVE</span><i></i><strong id="elims-count">0</strong><span>ELIMS</span></div>
+        <div class="storm-info"><span class="storm-icon">◉</span><div><b id="storm-label">STORM FORMING</b><small id="storm-timer">01:20</small></div></div>
+      </div>
+      <div class="minimap-frame"><canvas id="minimap" width="156" height="156"></canvas><span class="map-label">ISLAND 07</span></div>
+      <div class="hud-right">
+        <div class="weapon-card"><div class="weapon-symbol" id="weapon-symbol">⌁</div><div><small>LOADOUT</small><b id="weapon-name">FIELD RIFLE</b><span id="ammo-count">24 <i>/ 96</i></span></div><div class="reload-hint">R</div></div>
+        <div class="materials"><span>▰ <b id="material-count">30</b></span><small>BUILD MATERIAL</small></div>
+      </div>
+      <div class="health-wrap"><div class="health-label"><span>VITALS</span><span><b id="health-value">100</b> <i>HP</i><b id="shield-value">50</b> <i>SHIELD</i></span></div><div class="health-track"><div class="shield-bar" id="shield-bar"></div><div class="health-bar" id="health-bar"></div></div></div>
+    </section>
+    <div class="crosshair" id="crosshair"><i></i><i></i><i></i><i></i></div>
+    <div class="toast" id="toast"></div>
+    <div class="damage-flash" id="damage-flash"></div>
+    <section class="overlay intro-overlay" id="intro-overlay">
+      <div class="intro-copy"><div class="eyebrow"><span></span> THE ISLAND IS YOURS</div><h1>DROP IN.<br/><em>RISE UP.</em></h1><p>Twelve land on the island. Only one leaves.<br/>Scavenge, fight, and stay ahead of the storm.</p><button class="play-button" id="play-button"><span>DEPLOY</span><b>→</b></button><div class="quick-tip"><span>✦</span> TIP: Keep moving. The storm waits for no one.</div></div>
+      <div class="intro-side"><div class="island-art"><div class="art-sun"></div><div class="art-moon">✦</div><div class="art-mountain back"></div><div class="art-mountain front"></div><div class="art-island"><i></i><i></i><i></i></div><div class="art-supply">▣<b>SUPPLY DROP</b></div><div class="art-person"></div><div class="art-ground"></div><span class="art-coord">34° 06' N — 118° 22' W</span></div><div class="side-caption"><span>01</span><div><b>THE LAST ONE STANDING</b><small>EVERY DROP IS A NEW STORY</small></div></div></div>
+      <div class="controls-note"><span><b>W A S D</b> MOVE</span><span><b>MOUSE</b> AIM &nbsp;·&nbsp; CLICK FIRE</span><span><b>Q</b> BUILD COVER</span><span><b>SHIFT</b> SPRINT</span></div>
+    </section>
+    <section class="overlay end-overlay hidden" id="end-overlay"><div class="end-card"><div class="eyebrow" id="end-eyebrow">MATCH COMPLETE</div><div class="end-emblem" id="end-emblem">✦</div><h2 id="end-title">ISLAND<br/><em>CLAIMED</em></h2><p id="end-copy">You outlasted the entire island.</p><div class="match-stats"><div><b id="final-elims">0</b><small>ELIMINATIONS</small></div><div><b id="final-time">00:00</b><small>SURVIVAL TIME</small></div></div><button class="play-button" id="again-button"><span>DROP AGAIN</span><b>↻</b></button></div></section>
+    <div class="touch-controls" id="touch-controls"><div class="stick-zone" id="stick-zone"><div class="stick-base"><i id="stick-knob"></i></div></div><div class="touch-actions"><button id="touch-build">BUILD</button><button id="touch-fire">FIRE</button></div></div>
+    <footer class="bottom-hint" id="bottom-hint"><span>W A S D <i>MOVE</i></span><span>CLICK <i>FIRE</i></span><span>Q <i>BUILD COVER</i></span><span>R <i>RELOAD</i></span><span>SHIFT <i>SPRINT</i></span><span class="hint-right">© LAST DROP ISLAND</span></footer>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>
