@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#17120e" />
+  <title>Crumb &amp; Crown — Cookie Empire</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Crumb and Crown home"><span class="brand-mark">✦</span><span>CRUMB <i>&amp;</i> CROWN</span></a>
+      <div class="season-pill"><span class="live-dot"></span> AUTUMN HARVEST <span class="season-divider">·</span> DAY 04</div>
+      <div class="top-actions"><button class="icon-btn" id="soundToggle" aria-label="Toggle sound" title="Sound">♫</button><button class="icon-btn" id="settingsBtn" aria-label="Settings" title="Settings">⚙</button><div class="avatar">B</div></div>
+    </header>
+
+    <main class="game-layout">
+      <section class="bakery-panel panel">
+        <div class="bakery-heading"><div><div class="eyebrow">YOUR BAKERY</div><h1>The Golden Oven</h1></div><div class="level-chip"><span>✦</span> LEVEL <b id="level">1</b></div></div>
+        <div class="bakery-scene" id="bakeryScene">
+          <div class="scene-glow"></div><div class="window-view"><div class="moon"></div><div class="hill hill-back"></div><div class="hill hill-front"></div><span class="window-star star-a">✦</span><span class="window-star star-b">✦</span></div>
+          <div class="shelf shelf-one"><span>✿</span><span>◈</span><span>✿</span></div><div class="shelf shelf-two"><span>♨</span><span>♨</span></div>
+          <div class="oven"><div class="oven-top"></div><div class="oven-face"><div class="oven-window"><div class="oven-fire"></div></div><div class="oven-knobs"><i></i><i></i><i></i></div></div><div class="oven-name">FRESH DAILY</div></div>
+          <div class="floating-cookie cookie-float-one">🍪</div><div class="floating-cookie cookie-float-two">🍪</div>
+          <div class="scene-caption"><span class="caption-line"></span><span>EST. THIS MORNING</span><span class="caption-line"></span></div>
+        </div>
+        <div class="cookie-stage">
+          <div class="cookie-instruction"><span class="click-spark">✦</span> CLICK TO BAKE <span class="click-spark">✦</span></div>
+          <button class="big-cookie" id="bigCookie" aria-label="Bake a cookie"><span class="cookie-shadow"></span><span class="cookie-art"><i class="chip chip-1"></i><i class="chip chip-2"></i><i class="chip chip-3"></i><i class="chip chip-4"></i><i class="chip chip-5"></i><i class="chip chip-6"></i><i class="chip chip-7"></i><i class="chip chip-8"></i><i class="chip chip-9"></i><i class="cookie-glint"></i></span></button>
+          <div class="click-power">+<b id="clickPower">1</b> <span>per tap</span></div>
+        </div>
+        <div class="bakery-footer"><div class="mini-stat"><span class="mini-icon">♨</span><div><small>BAKERS AT WORK</small><b id="bakerCount">0</b></div></div><div class="mini-stat"><span class="mini-icon">⌁</span><div><small>BAKED THIS RUN</small><b id="runCount">0</b></div></div><button class="prestige-btn" id="prestigeBtn" disabled><span>♛</span> ASCEND <small>0 CROWNS</small></button></div>
+      </section>
+
+      <section class="empire-column">
+        <div class="wealth-card panel"><div class="wealth-orbit">✦</div><div class="eyebrow">YOUR COOKIE EMPIRE</div><div class="cookie-total"><span class="cookie-emoji">🍪</span><strong id="cookieCount">0</strong><span class="total-label">cookies</span></div><div class="production-line"><span class="pulse-dot"></span><span><b id="perSecond">0</b> cookies / second</span><span class="production-note">· freshly baked</span></div><div class="wealth-divider"></div><div class="wealth-bottom"><span>ALL-TIME BAKED</span><b id="allTime">0</b></div></div>
+        <div class="boost-card panel"><div class="boost-icon">⚡</div><div class="boost-copy"><div class="boost-title">Sugar rush</div><p>Double your baking for 30 seconds</p></div><button class="boost-button" id="boostBtn">ACTIVATE <span>· 2,500</span></button><div class="boost-meter"><i id="boostMeter"></i></div></div>
+        <div class="shop panel"><div class="shop-heading"><div><div class="eyebrow">THE SUPPLY ROOM</div><h2>Build your bakery</h2></div><span class="shop-count" id="shopCount">0 / 8</span></div><div class="shop-list" id="shopList"></div></div>
+      </section>
+
+      <aside class="side-column">
+        <section class="side-card panel"><div class="side-heading"><div><div class="eyebrow">LITTLE WINS</div><h2>Milestones</h2></div><span class="trophy">♕</span></div><div class="achievement-progress"><div class="progress-copy"><span id="achievementCount">0 of 5 complete</span><b id="achievementPct">0%</b></div><div class="progress-track"><i id="achievementBar"></i></div></div><div class="achievement-list" id="achievementList"></div></section>
+        <section class="command-card panel"><div class="command-top"><div class="terminal-icon">⌘</div><div><div class="eyebrow">BAKER'S CONSOLE</div><h2>Quick commands</h2></div><button class="tiny-help" id="commandHelp" aria-label="Command help">?</button></div><div class="command-output" id="commandOutput"><span class="terminal-prompt">›</span> Type <b>help</b> to see commands.</div><form class="command-form" id="commandForm"><span class="terminal-prompt">›</span><input id="commandInput" autocomplete="off" placeholder="Try: daily" aria-label="Enter command" /><button aria-label="Run command">↵</button></form><div class="command-foot"><span class="online-dot"></span> MINI ADMIN <span class="foot-separator">·</span> BAKERY ONLY</div></section>
+        <button class="owner-entry" id="ownerEntry"><span class="owner-lock">♙</span><span><b>Owner panel</b><small>Restricted access</small></span><span class="owner-arrow">↗</span></button>
+        <div class="save-note"><span>◉</span> Progress saves automatically</div>
+      </aside>
+    </main>
+    <footer class="footer"><span>CRUMB &amp; CROWN <i>•</i> THE COZIEST EMPIRE IN TOWN</span><span>MADE WITH <b>♥</b> &amp; A LITTLE FLOUR</span></footer>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+  <div class="modal-backdrop" id="modalBackdrop" hidden><section class="modal panel" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><button class="modal-close" id="modalClose" aria-label="Close">×</button><div class="modal-emblem" id="modalEmblem">✦</div><div class="eyebrow" id="modalEyebrow">BAKERY ACCESS</div><h2 id="modalTitle">Owner's entrance</h2><p id="modalDescription">Enter the owner's code to unlock the command suite.</p><form id="ownerCodeForm" class="owner-code-form"><input id="ownerCode" type="password" inputmode="numeric" maxlength="8" placeholder="Enter access code" aria-label="Owner access code" /><button class="primary-btn">UNLOCK <span>↗</span></button></form><div id="ownerPanel" class="owner-panel" hidden></div></section></div>
+  <script src="game.js"></script>
+</body>
+</html>
