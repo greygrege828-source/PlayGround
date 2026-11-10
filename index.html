@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#241a24">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <title>Crumb Kingdom — Idle Bakery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,700;9..144,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="rail">
+      <a class="brand-mark" href="#" aria-label="Crumb Kingdom home">C<span>✦</span></a>
+      <nav class="rail-nav" aria-label="Main navigation">
+        <button class="rail-link active" data-view="bakery" aria-label="Bakery" title="Bakery">⌂</button>
+        <button class="rail-link" data-view="upgrades" aria-label="Upgrades" title="Upgrades">↗</button>
+        <button class="rail-link" data-view="collection" aria-label="Collection" title="Collection">▤</button>
+      </nav>
+      <button class="rail-link admin-shortcut" id="adminShortcut" aria-label="Admin tools" title="Admin tools">⌘</button>
+      <div class="rail-bottom"><span class="status-dot"></span><span>BAKERY<br>ONLINE</span></div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="crumb"><span class="crumb-icon">✦</span> YOUR BAKERY <span class="slash">/</span> <b id="headerSection">OVERVIEW</b></div>
+        <div class="top-actions">
+          <div class="save-state"><span class="status-dot"></span><span id="saveLabel">ALL PROGRESS SAVED</span></div>
+          <button class="icon-button" id="soundToggle" aria-label="Toggle sound" title="Toggle sound">♫</button>
+          <button class="avatar" id="profileButton" aria-label="Open profile">B</button>
+        </div>
+      </header>
+
+      <section class="welcome-row">
+        <div><p class="eyebrow" id="dateLabel">A FRESH BATCH, EVERY DAY</p><h1 id="greeting">Good morning, baker<span>✨</span></h1><p class="subhead">Your little corner of the kingdom is growing.</p></div>
+        <button class="daily-button" id="dailyButton"><span class="daily-icon">🎁</span><span><b>Daily dough</b><small id="dailyCaption">Claim your welcome bonus</small></span><span class="daily-arrow">↗</span></button>
+      </section>
+
+      <section class="dashboard-grid" id="dashboardView">
+        <div class="left-column">
+          <section class="card production-card">
+            <div class="card-heading"><div><p class="eyebrow">YOUR BAKERY AT A GLANCE</p><h2>Today’s batch</h2></div><div class="live-pill"><span class="pulse"></span> BAKING</div></div>
+            <div class="stat-grid">
+              <div class="stat-block"><span class="stat-icon cookie-mini">●</span><span class="stat-label">TOTAL COOKIES</span><strong id="cookieCount">0</strong><small>cookies in the jar</small></div>
+              <div class="stat-block"><span class="stat-icon">⌁</span><span class="stat-label">PER SECOND</span><strong id="cpsCount">0</strong><small>fresh from the oven</small></div>
+              <div class="stat-block"><span class="stat-icon">↗</span><span class="stat-label">PER CLICK</span><strong id="clickCount">1</strong><small>with every tap</small></div>
+            </div>
+            <div class="production-footer"><span><i class="tiny-cookie"></i> Lifetime baked</span><strong id="lifetimeCount">0</strong></div>
+          </section>
+
+          <section class="card click-card">
+            <div class="click-card-top"><div><p class="eyebrow">THE SECRET INGREDIENT</p><h2>One more cookie?</h2></div><span class="click-hint">TAP TO BAKE <span>↓</span></span></div>
+            <div class="cookie-stage" id="cookieStage">
+              <div class="sparkle sparkle-a">✦</div><div class="sparkle sparkle-b">✧</div><div class="sparkle sparkle-c">✦</div>
+              <button class="big-cookie" id="bigCookie" aria-label="Bake a cookie"><span class="cookie-face">●</span><span class="chip chip-one"></span><span class="chip chip-two"></span><span class="chip chip-three"></span><span class="chip chip-four"></span><span class="chip chip-five"></span><span class="cookie-shine"></span></button>
+              <div class="click-burst" id="clickBurst" aria-hidden="true"></div>
+            </div>
+            <div class="click-card-bottom"><span>Handmade with <b>♥</b> (and a little butter)</span><span class="click-total"><i></i><b id="clickTotal">0</b> baked by hand</span></div>
+          </section>
+
+          <section class="card milestone-card">
+            <div class="milestone-icon">🏅</div><div class="milestone-copy"><p class="eyebrow">NEXT LITTLE VICTORY</p><h3 id="milestoneTitle">First dozen</h3><p id="milestoneDescription">Bake 12 cookies to earn your first badge.</p></div><div class="milestone-progress"><b id="milestoneProgressText">0 / 12</b><div class="progress-track"><span id="milestoneProgress"></span></div></div>
+          </section>
+        </div>
+
+        <aside class="right-column">
+          <section class="card upgrades-card" id="upgradesPanel">
+            <div class="card-heading shop-heading"><div><p class="eyebrow">MAKE MORE, FASTER</p><h2>Little helpers</h2></div><span class="shop-count" id="helperCount">0 owned</span></div>
+            <p class="shop-intro">Good things happen when you let the dough rise.</p>
+            <div class="upgrade-list" id="upgradeList"></div>
+            <div class="shop-tip"><span>✦</span><span><b>A baker’s tip</b><br>Helpers bake even while you’re away.</span></div>
+          </section>
+          <section class="card orders-card"><div class="order-art">☕</div><div><p class="eyebrow">A MOMENT TO REST</p><h3>Oven’s on autopilot</h3><p>Your helpers keep the trays coming. Come back for a warm batch.</p></div></section>
+        </aside>
+      </section>
+
+      <section class="card collection-view hidden" id="collectionView">
+        <div class="card-heading"><div><p class="eyebrow">YOUR BAKERY STORY</p><h2>Little victories</h2></div><span class="shop-count" id="achievementCount">0 earned</span></div>
+        <p class="shop-intro">Every batch tells a story. Keep baking to fill your shelf.</p><div class="achievement-grid" id="achievementGrid"></div>
+      </section>
+
+      <footer class="footer"><span>CRUMB KINGDOM <span class="footer-dot">✦</span> A LITTLE IDLE BAKERY</span><span>Made for cookie lovers, everywhere.</span></footer>
+    </main>
+
+    <aside class="admin-panel" id="adminPanel" aria-label="Bakery admin controls">
+      <div class="admin-header"><div class="admin-symbol">⌘</div><div><p class="eyebrow">BAKERY TOOLS</p><h2>Command nook</h2></div><button class="close-button" id="closeAdmin" aria-label="Close admin">×</button></div>
+      <div class="admin-tabs"><button class="admin-tab selected" data-tab="mini">MINI ADMIN</button><button class="admin-tab" data-tab="owner">OWNER <span>✦</span></button></div>
+      <div class="admin-scroll">
+        <section class="tab-content" id="miniTab">
+          <div class="access-note"><span>⌁</span><p><b>Quick bakery controls</b><br>Small commands for your everyday baking.</p></div>
+          <div class="command-list">
+            <button class="command-row" data-command="help"><code>/help</code><span>Show available commands</span><i>↗</i></button>
+            <button class="command-row" data-command="stats"><code>/stats</code><span>See your bakery stats</span><i>↗</i></button>
+            <button class="command-row" data-command="daily"><code>/daily</code><span>Claim your daily dough</span><i>↗</i></button>
+            <button class="command-row" data-command="bake"><code>/bake</code><span>Bake 10 bonus cookies</span><i>↗</i></button>
+          </div>
+          <p class="command-hint">Pick a command or type it below.</p>
+          <div class="terminal" id="terminalOutput" aria-live="polite"><span class="terminal-mark">✦</span> Welcome to your command nook!<br><span class="muted-terminal">Try <b>/help</b> to see what I can do.</span></div>
+          <form class="command-form" id="commandForm"><span class="prompt">›</span><input id="commandInput" autocomplete="off" placeholder="Type a command…" aria-label="Enter command"><button type="submit" aria-label="Run command">↵</button></form>
+          <div class="owner-teaser"><span class="lock-icon">♙</span><div><b>Got the secret code?</b><small>Unlock the big owner controls.</small></div><button id="goOwner">ENTER CODE <span>→</span></button></div>
+        </section>
+        <section class="tab-content hidden" id="ownerTab">
+          <div class="access-note owner-note"><span>✦</span><p><b>Owner’s oven</b><br>Enter the bakery’s secret code to unlock.</p></div>
+          <form class="code-form" id="codeForm"><label for="ownerCode">OWNER ACCESS CODE</label><div class="code-field"><span>✦</span><input id="ownerCode" type="password" inputmode="numeric" maxlength="8" placeholder="••••" autocomplete="off"><button type="submit">UNLOCK ↗</button></div><small id="codeMessage">Your secret stays on this device.</small></form>
+          <div class="owner-locked" id="ownerLocked"><div class="lock-big">♙</div><b>Four little numbers.</b><span>Only the bakery owner knows them.</span></div>
+          <div class="owner-controls hidden" id="ownerControls"><div class="owner-unlocked"><span>✦</span><div><b>Welcome back, owner.</b><small>Big bakery powers are yours.</small></div></div>
+            <p class="eyebrow command-section-title">BIG COMMANDS</p>
+            <button class="owner-command" data-owner="bonus"><span class="owner-command-icon">＋</span><span><b>Royal reserve</b><small>Add 10,000 cookies to the jar</small></span><i>↗</i></button>
+            <button class="owner-command" data-owner="golden"><span class="owner-command-icon">☀</span><span><b>Golden hour</b><small>2× production for 60 seconds</small></span><i>↗</i></button>
+            <button class="owner-command" data-owner="helpers"><span class="owner-command-icon">♙</span><span><b>Hire a dream team</b><small>Get one of every helper</small></span><i>↗</i></button>
+            <button class="owner-command" data-owner="clickboost"><span class="owner-command-icon">✦</span><span><b>Magic mittens</b><small>Permanent +10 cookies per click</small></span><i>↗</i></button>
+            <button class="owner-command reset-command" data-owner="reset"><span class="owner-command-icon">↺</span><span><b>Fresh start</b><small>Reset this bakery’s progress</small></span><i>↗</i></button>
+            <div class="owner-footer">OWNER TOOLS ARE LOCAL TO THIS BROWSER.</div>
+          </div>
+        </section>
+      </div>
+    </aside>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+  </div>
+  <script src="game.js"></script>
+</body>
+</html>
