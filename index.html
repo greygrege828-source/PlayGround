@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Switchyard — Night Shift</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap');
+:root{--lime:#d8ff3f;--pink:#ff4e9b;--cyan:#6cf5ed;--ink:#071318}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#081419;color:#eff8f5;font-family:'DM Mono',monospace}canvas{display:block;position:fixed;inset:0;z-index:0}
+#vignette{position:fixed;inset:0;pointer-events:none;z-index:1;background:linear-gradient(180deg,rgba(3,14,20,.62),transparent 25%,transparent 68%,rgba(3,12,16,.55)),radial-gradient(ellipse at center,transparent 35%,rgba(2,9,13,.4))}
+.hud{position:fixed;z-index:2;inset:0;padding:24px 30px;pointer-events:none;display:flex;flex-direction:column;justify-content:space-between}.top{display:flex;align-items:flex-start;justify-content:space-between}.brand{font:900 34px/.8 'Barlow Condensed',sans-serif;letter-spacing:-.03em}.brand em{font-style:normal;color:var(--lime)}.eyebrow{font-size:10px;letter-spacing:.24em;color:#a8c1c4;margin-top:8px}.objective{position:absolute;left:50%;top:23px;transform:translateX(-50%);text-align:center;min-width:250px}.objective strong{display:block;font:800 21px 'Barlow Condensed',sans-serif;letter-spacing:.1em;color:var(--lime)}.objective span{font-size:10px;color:#b5c5c6;letter-spacing:.14em}.righttop{display:flex;gap:24px;text-align:right}.statlabel{font-size:9px;color:#90aaad;letter-spacing:.2em}.statvalue{font:800 27px 'Barlow Condensed',sans-serif;line-height:1.05}.scorebox .statvalue{color:var(--lime)}#timer{color:#fff}.mid{display:flex;justify-content:space-between;align-items:center}.combo{opacity:0;transform:translateY(10px);transition:.2s;text-align:left}.combo.show{opacity:1;transform:none}.combo .num{font:900 58px/.8 'Barlow Condensed',sans-serif;color:var(--pink);text-shadow:0 0 25px #ff4e9b88}.combo small{display:block;font-size:10px;letter-spacing:.2em;margin-top:10px}.toast{position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);font:900 28px 'Barlow Condensed',sans-serif;letter-spacing:.13em;color:var(--lime);text-shadow:0 2px 20px #000;white-space:nowrap;opacity:0;transition:.3s}.toast.show{opacity:1;transform:translate(-50%,-65%)}.bottom{display:flex;align-items:flex-end;justify-content:space-between}.meter-wrap{width:205px}.meter-title{display:flex;justify-content:space-between;font-size:9px;letter-spacing:.16em;margin-bottom:8px;color:#b8c7c7}.meter{height:5px;background:#ffffff25;overflow:hidden}.meter i{height:100%;display:block;width:100%;background:var(--cyan);box-shadow:0 0 12px var(--cyan);transition:width .1s}.tags{display:flex;gap:7px;margin-top:13px}.tag{width:15px;height:15px;border:1px solid #769091;transform:rotate(45deg);background:#102329}.tag.got{background:var(--lime);border-color:var(--lime);box-shadow:0 0 12px #d8ff3f88}.controls{font-size:9px;color:#bed0ce;line-height:1.9;text-align:right;letter-spacing:.04em}.key{display:inline-block;border:1px solid #ffffff50;border-radius:3px;padding:1px 5px;color:#fff;font-size:9px}.flash{position:fixed;inset:0;background:#d8ff3f;opacity:0;pointer-events:none;z-index:4}.flash.on{animation:flash .4s ease-out}@keyframes flash{0%{opacity:.22}100%{opacity:0}}
+#startscreen{position:fixed;z-index:5;inset:0;display:grid;place-items:center;background:linear-gradient(90deg,rgba(2,11,15,.88),rgba(2,11,15,.25)),linear-gradient(0deg,#071419aa,transparent);transition:opacity .5s}.intro{width:min(600px,90vw);margin-left:8vw}.kicker{color:var(--cyan);font-size:10px;letter-spacing:.3em;margin-bottom:15px}.title{font:900 clamp(76px,12vw,142px)/.72 'Barlow Condensed',sans-serif;letter-spacing:-.045em;margin:0;text-transform:uppercase}.title span{color:var(--lime);display:block}.desc{max-width:400px;color:#b7c8c8;font-size:12px;line-height:1.8;margin:27px 0 24px}.startbtn{pointer-events:auto;background:var(--lime);border:0;color:#101811;padding:15px 24px;font:900 16px 'Barlow Condensed',sans-serif;letter-spacing:.16em;cursor:pointer;clip-path:polygon(0 0,94% 0,100% 25%,100% 100%,6% 100%,0 75%)}.startbtn:hover{background:#fff}.rule{display:flex;gap:19px;margin-top:28px;color:#90a5a7;font-size:9px;letter-spacing:.1em}.rule b{color:#eff8f5;font-weight:500}.result{position:fixed;z-index:6;inset:0;display:none;place-items:center;background:#041014ca;text-align:center}.result.show{display:grid}.result h2{font:900 76px/.85 'Barlow Condensed',sans-serif;color:var(--lime);margin:0}.result p{font-size:12px;color:#bdcbca;line-height:2}.touch{display:none;position:fixed;z-index:3;inset:auto 0 15px;padding:0 16px;justify-content:space-between;pointer-events:none}.touchgroup{display:flex;gap:10px}.touch button{pointer-events:auto;width:55px;height:55px;border-radius:50%;border:1px solid #dfffff66;background:#06151ca8;color:white;font:700 14px 'DM Mono';touch-action:none}.touch .ollie{background:#d8ff3f;color:#0b1410;border:0;width:64px;height:64px}.touch .flux{border-color:var(--cyan);color:var(--cyan)}@media(max-width:700px){.bottom{padding-bottom:82px}.hud{padding:16px}.brand{font-size:27px}.objective{top:73px}.righttop{gap:12px}.statvalue{font-size:23px}.controls{display:none}.touch{display:flex}.meter-wrap{width:155px}.intro{margin:0 5vw}.rule{flex-wrap:wrap;gap:8px 14px}.desc{font-size:11px}.title{font-size:clamp(74px,18vw,112px)}}
+</style>
+</head>
+<body>
+<div id="vignette"></div>
+<div class="hud">
+ <div class="top"><div><div class="brand">NIGHT<span style="color:var(--lime)">SHIFT</span></div><div class="eyebrow">SWITCHYARD DISTRICT / 01</div></div><div class="objective"><strong id="objective">TAG THE SIGNAL</strong><span id="subobjective">0 / 5 PRISM TAGS · HIT 2,500 PTS</span></div><div class="righttop"><div class="scorebox"><div class="statlabel">SESSION SCORE</div><div class="statvalue" id="score">000000</div></div><div><div class="statlabel">TIME LEFT</div><div class="statvalue" id="timer">90</div></div></div></div>
+ <div class="mid"><div class="combo" id="combo"><div class="num" id="comboNum">x1</div><small id="comboText">CLEAN LANDING</small></div><div class="toast" id="toast">SIGNAL ACQUIRED</div></div>
+ <div class="bottom"><div><div class="meter-wrap"><div class="meter-title"><span>FLUX CHARGE</span><span id="fluxLabel">READY</span></div><div class="meter"><i id="fluxFill"></i></div></div><div class="tags" id="tags"><i class="tag"></i><i class="tag"></i><i class="tag"></i><i class="tag"></i><i class="tag"></i></div></div><div class="controls"><span class="key">W</span> PUSH &nbsp; <span class="key">A</span><span class="key">D</span> CARVE<br><span class="key">SPACE</span> OLLIE &nbsp; <span class="key">Q</span><span class="key">E</span> TRICK<br><span class="key">F</span> FLUX-LATCH NEAR RAILS</div></div>
+</div>
+<div id="startscreen"><div class="intro"><div class="kicker">A MIDNIGHT STREET SESSION</div><h1 class="title">OWN THE<span>YARD.</span></h1><p class="desc">The freight line's gone quiet. Link the signal tags, stack 2,500 points, and make the exit before the yard wakes up. The new <b style="color:var(--cyan)">FLUX-LATCH</b> snaps you onto nearby rails—ride the pulse, then bail before it burns out.</p><button class="startbtn" id="start">DROP IN &nbsp; ↗</button><div class="rule"><span><b>WASD</b> RIDE</span><span><b>SPACE</b> OLLIE</span><span><b>Q / E</b> TRICKS</span><span><b>F</b> FLUX-LATCH</span></div></div></div>
+<div class="result" id="result"><div><h2 id="resultTitle">YARD CLEARED</h2><p id="resultCopy">SIGNAL LINKED</p><button class="startbtn" id="retry">RUN IT BACK ↻</button></div></div><div class="flash" id="flash"></div>
+<div class="touch"><div class="touchgroup"><button data-hold="a">◀</button><button data-hold="d">▶</button></div><div class="touchgroup"><button class="flux" data-hold="f">FLUX</button><button data-trick>TRICK</button><button class="ollie" data-hold="space">OLLIE</button></div></div>
+<script type="module">
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x10242b);scene.fog=new THREE.Fog(0x10242b,34,150);
+const camera=new THREE.PerspectiveCamera(58,innerWidth/innerHeight,.1,240);
+const renderer=new THREE.WebGLRenderer({antialias:true,powerPreference:'high-performance'});renderer.setPixelRatio(Math.min(devicePixelRatio,1.8));renderer.setSize(innerWidth,innerHeight);renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.15;document.body.appendChild(renderer.domElement);
+scene.add(new THREE.HemisphereLight(0x9edce4,0x26302b,1.5));const moon=new THREE.DirectionalLight(0xb7d8d8,2.1);moon.position.set(-12,23,9);moon.castShadow=true;moon.shadow.mapSize.set(1024,1024);moon.shadow.camera.left=-28;moon.shadow.camera.right=28;moon.shadow.camera.top=30;moon.shadow.camera.bottom=-50;scene.add(moon);
+const mats={ground:new THREE.MeshStandardMaterial({color:0x273638,roughness:.92}),concrete:new THREE.MeshStandardMaterial({color:0x596568,roughness:.8}),dark:new THREE.MeshStandardMaterial({color:0x18272a,roughness:.68}),metal:new THREE.MeshStandardMaterial({color:0x829398,metalness:.78,roughness:.3}),lime:new THREE.MeshStandardMaterial({color:0xd8ff3f,emissive:0x607a10,emissiveIntensity:1.4}),cyan:new THREE.MeshStandardMaterial({color:0x62f4eb,emissive:0x156c72,emissiveIntensity:1.7}),pink:new THREE.MeshStandardMaterial({color:0xff4e9b,emissive:0x771645,emissiveIntensity:1.1}),board:new THREE.MeshStandardMaterial({color:0xe7eece,roughness:.45}),hoodie:new THREE.MeshStandardMaterial({color:0xe45779,roughness:.78}),pants:new THREE.MeshStandardMaterial({color:0x202c34,roughness:.85}),skin:new THREE.MeshStandardMaterial({color:0xc99273,roughness:.8})};
+function box(parent,x,y,z,sx,sy,sz,mat,cast=true){const m=new THREE.Mesh(new THREE.BoxGeometry(sx,sy,sz),mat);m.position.set(x,y,z);m.castShadow=cast;m.receiveShadow=true;parent.add(m);return m}
+function cyl(parent,x,y,z,r1,r2,h,mat,segments=12){const m=new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,segments),mat);m.position.set(x,y,z);m.castShadow=true;parent.add(m);return m}
+function line(parent,a,b,r,mat){const d=new THREE.Vector3().subVectors(b,a);const m=new THREE.Mesh(new THREE.CylinderGeometry(r,r,d.length(),8),mat);m.position.copy(a).add(b).multiplyScalar(.5);m.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),d.normalize());parent.add(m);return m}
+// Asphalt apron, lane paint, and a long industrial run.
+box(scene,0,-.55,-48,42,1.1,126,mats.ground,false);
+for(let x=-19;x<=19;x+=3.8){box(scene,x,.012,-47,.055,.025,119,x===-19||x===19?mats.cyan:mats.concrete,false)}
+for(let z=-5;z>-115;z-=12){box(scene,0,.025,z,.18,.025,4,mats.lime,false)}
+// Backlit warehouse blocks and distant skyline silhouettes.
+const buildingMats=[0x213237,0x26383c,0x1b2c31,0x304044].map(c=>new THREE.MeshStandardMaterial({color:c,roughness:.95}));
+for(let side of [-1,1])for(let i=0;i<8;i++){const z=-i*16-3,h=9+(i*7%14),w=7+(i%3)*2;box(scene,side*(15+(i%2)*2),h/2-0.1,z,w,h,10,buildingMats[i%4],false);for(let y=2;y<h-1;y+=3)for(let k=0;k<3;k++){const win=new THREE.MeshStandardMaterial({color:(i+k)%3===0?0x60b5b4:0xd69757,emissive:(i+k)%3===0?0x174a52:0x4a2410,emissiveIntensity:.7});box(scene,side*(15+(i%2)*2)+(k-1)*1.8,y,z+5.06,1,.75,.05,win,false)}}
+// Floodlight pylons.
+for(let z=-12;z>-105;z-=27)for(let side of [-1,1]){const x=side*12;box(scene,x,4.7,z,.24,9.4,.24,mats.metal);box(scene,x-side*1.1,9.3,z,2.6,.18,.35,mats.dark);const lamp=new THREE.PointLight(0x6cf5ed,35,17,2);lamp.position.set(x-side*1.1,9,z);scene.add(lamp);box(scene,x-side*1.1,9.1,z,1.4,.16,.28,mats.cyan,false)}
+// Curbs and obstacles.
+for(let z=-9;z>-108;z-=17){box(scene,-8.7,.28,z,1.5,.55,7,mats.concrete);box(scene,8.7,.28,z-6,1.5,.55,7,mats.concrete);for(let side of [-1,1]){box(scene,side*8.7,.58,z,1.7,.06,.12,mats.lime,false)}}
+// Skateable ramps, platforms, and rails across the route.
+function ramp(x,z,w,len,top=1.2){const g=new THREE.Group();scene.add(g);let s=box(g,x,top/2,z,w,top,len,mats.concrete);s.rotation.x=-Math.atan2(top,len*.45);box(g,x,top+.035,z,.14,.08,len*.82,mats.pink,false);return g}
+ramp(-3,-23,5,8,1.35);ramp(4,-49,5,8,1.45);ramp(-3,-79,6,9,1.6);
+for(const [x,z,len,h] of [[1,-15,14,1.1],[-2,-38,16,.95],[3,-62,15,1.2],[-1,-94,18,1.05]]){
+ for(const offset of [-len*.42,0,len*.42])box(scene,x,h/2,z+offset,.18,h,.16,mats.dark);box(scene,x,h+.035,z,.13,.09,len,mats.metal);
+ // neon rail end caps
+ for(const end of [-1,1]){cyl(scene,x,h,z+end*len/2,.12,.12,.28,mats.cyan,10).rotation.x=Math.PI/2}
+}
+// Stair ledges / shipping containers at the margins.
+for(const [x,z,c] of [[-7,-32,0x354549],[7,-73,0x33474a],[-7,-88,0x293a3e]]){box(scene,x,.65,z,3,1.3,6,new THREE.MeshStandardMaterial({color:c,metalness:.25,roughness:.65}));for(let y=0;y<3;y++)box(scene,x,1.35,z-2.6+y*.12,3,.04,.05,mats.metal,false)}
+// Goal arch at the far end.
+for(const x of [-5.5,5.5])box(scene,x,3,-111,.24,6,.25,mats.cyan);box(scene,0,6,-111,11,.25,.25,mats.cyan);box(scene,0,5.2,-111,8,.08,.08,mats.lime,false);
+
+// Collectible signal prisms.
+const tags=[];const tagPlaces=[[-5,-18],[-1,-37],[5,-56],[-4,-76],[2,-98]];
+for(const [x,z] of tagPlaces){const group=new THREE.Group();group.position.set(x,1.55,z);scene.add(group);const gem=new THREE.Mesh(new THREE.OctahedronGeometry(.48,0),mats.lime);gem.castShadow=true;group.add(gem);const ring=new THREE.Mesh(new THREE.TorusGeometry(.78,.035,8,32),mats.cyan);ring.rotation.x=Math.PI/2;group.add(ring);const light=new THREE.PointLight(0xd8ff3f,3,5);group.add(light);tags.push({group,gem,ring,got:false})}
+
+// Skater + board, all built from simple low-poly pieces.
+const skater=new THREE.Group();scene.add(skater);
+const board=box(skater,0,.2,0,.42,.12,1.05,mats.board);board.rotation.x=0;
+for(const z of [-.35,.35]){box(skater,0,.11,z,.58,.08,.12,mats.metal);for(const x of [-.22,.22]){const wheel=cyl(skater,x,.055,z,.09,.09,.09,mats.dark,12);wheel.rotation.z=Math.PI/2}}
+const torso=box(skater,0,1.07,0,.55,.72,.34,mats.hoodie);const head=new THREE.Mesh(new THREE.SphereGeometry(.23,12,10),mats.skin);head.position.set(0,1.62,0);skater.add(head);const hat=box(skater,0,1.83,0,.48,.12,.42,mats.dark);
+const limbs=new THREE.Group();skater.add(limbs);
+for(const side of [-1,1]){line(limbs,new THREE.Vector3(side*.17,.83,0),new THREE.Vector3(side*.2,.36,side*.12),.095,mats.pants);line(limbs,new THREE.Vector3(side*.2,.36,side*.12),new THREE.Vector3(side*.2,.24,side*.34),.085,mats.dark);line(limbs,new THREE.Vector3(side*.26,1.3,0),new THREE.Vector3(side*.48,1.13,-.08),.065,mats.hoodie);line(limbs,new THREE.Vector3(side*.48,1.13,-.08),new THREE.Vector3(side*.6,1.2,-.12),.055,mats.skin)}
+const rails=[{x:1,z:-15,len:14,h:1.1},{x:-2,z:-38,len:16,h:.95},{x:3,z:-62,len:15,h:1.2},{x:-1,z:-94,len:18,h:1.05}];
+const keys={};let playing=false,ended=false,score=0,timeLeft=90,flux=100,tagsGot=0,speed=5.8,vy=0,air=false,grind=null,comboValue=1,comboPoints=0,comboTricks=0,lastTrick=0,toastTimer=0,invuln=0;
+const clock=new THREE.Clock();let lastSpace=false,lastFlux=false;
+const $=id=>document.getElementById(id);
+function notify(text){$('toast').textContent=text;$('toast').classList.add('show');toastTimer=1.5}
+function showCombo(){if(comboPoints>0){$('comboNum').textContent='x'+comboValue;$('comboText').textContent=`${comboPoints.toLocaleString()} PTS · ${comboTricks} TRICK${comboTricks===1?'':'S'}`;$('combo').classList.add('show')}}
+function doTrick(dir){if(!air||!playing)return;const now=performance.now();comboTricks++;comboValue=Math.min(5,1+Math.floor(comboTricks/2));const pts=Math.round((120+speed*18)*comboValue);comboPoints+=pts;score+=pts;lastTrick=now;skater.rotation.y+=dir*Math.PI*.72;board.rotation.z+=dir*.4;notify(dir>0?'SHUVIT!':'KICKFLIP!');}
+function land(){if(!air)return;air=false;vy=0;skater.position.y=0;skater.rotation.y=Math.PI;board.rotation.set(0,0,0);if(comboPoints){score+=Math.round(comboPoints*(comboValue-1)*.35);notify(`CLEAN LANDING  +${comboPoints.toLocaleString()}`);showCombo();setTimeout(()=>$('combo').classList.remove('show'),1350)}comboPoints=0;comboTricks=0;comboValue=1;}
+function tryFlux(){if(!playing||flux<18||grind)return;let best=null,dist=99;for(const r of rails){if(Math.abs(skater.position.z-r.z)>r.len/2+1.5)continue;const d=Math.abs(skater.position.x-r.x);if(d<dist&&d<4.2){dist=d;best=r}}if(best){grind={rail:best,t:0};flux=Math.max(0,flux-18);skater.position.x=best.x;skater.position.y=best.h-.15;air=false;vy=0;board.rotation.z=0;notify('FLUX-LATCH · LOCKED');$('flash').classList.remove('on');void $('flash').offsetWidth;$('flash').classList.add('on')}}
+function endGame(win){if(ended)return;ended=true;playing=false;$('resultTitle').textContent=win?'YARD CLEARED':'SESSION OVER';$('resultTitle').style.color=win?'var(--lime)':'var(--pink)';$('resultCopy').innerHTML=win?`SIGNAL LINKED · ${score.toLocaleString()} POINTS<br>THE SWITCHYARD IS YOURS.`:`${tagsGot}/5 TAGS · ${score.toLocaleString()} POINTS<br>THE NIGHT SHIFT WINS THIS ROUND.`;$('result').classList.add('show')}
+function reset(){score=0;timeLeft=90;flux=100;tagsGot=0;speed=5.8;vy=0;air=false;grind=null;comboPoints=0;comboTricks=0;comboValue=1;ended=false;skater.position.set(0,0,2);skater.rotation.set(0,Math.PI,0);board.rotation.set(0,0,0);tags.forEach(t=>{t.got=false;t.group.visible=true});$('result').classList.remove('show');$('score').textContent='000000';$('timer').textContent='90';$('tags').querySelectorAll('.tag').forEach(t=>t.classList.remove('got'));$('startscreen').style.opacity='0';$('startscreen').style.pointerEvents='none';playing=true;clock.getDelta();notify('DROP IN!')}
+$('start').addEventListener('click',reset);$('retry').addEventListener('click',reset);
+window.addEventListener('keydown',e=>{const k=e.key.toLowerCase();keys[k]=true;if([' ','arrowup','arrowdown','arrowleft','arrowright'].includes(k))e.preventDefault();if(!e.repeat&&k==='q')doTrick(-1);if(!e.repeat&&k==='e')doTrick(1);if(!e.repeat&&k==='r'&&ended)reset()});window.addEventListener('keyup',e=>keys[e.key.toLowerCase()]=false);
+document.querySelectorAll('[data-hold]').forEach(b=>{const k=b.dataset.hold;b.addEventListener('pointerdown',e=>{e.preventDefault();keys[k]=true});for(const ev of ['pointerup','pointercancel','pointerleave'])b.addEventListener(ev,e=>{keys[k]=false})});document.querySelector('[data-trick]').addEventListener('pointerdown',e=>{e.preventDefault();doTrick(1)});
+
+function frame(){requestAnimationFrame(frame);const dt=Math.min(clock.getDelta(),.04),t=clock.elapsedTime;
+ tags.forEach(o=>{if(o.got)return;o.group.rotation.y+=dt*.7;o.group.position.y=1.55+Math.sin(t*2+o.group.position.z)*.13;o.ring.rotation.z+=dt*.8});
+ if(playing){timeLeft-=dt;if(timeLeft<=0){timeLeft=0;endGame(false)}
+  const left=keys.a||keys.arrowleft,right=keys.d||keys.arrowright,throttle=keys.w||keys.arrowup,brake=keys.s||keys.arrowdown;
+  speed+=((throttle?10.4:5.8)-speed)*dt*(throttle?1.4:.35);if(brake)speed=Math.max(2,speed-9*dt);speed=THREE.MathUtils.clamp(speed,2,12.5);
+  const steer=(right?1:0)-(left?1:0);skater.position.x+=steer*dt*(3.7+speed*.28);skater.position.x=THREE.MathUtils.clamp(skater.position.x,-9.6,9.6);
+  if(!grind)skater.position.z-=speed*dt;
+  const space=keys.space||keys[' '];if(space&&!lastSpace&&!air&&!grind){air=true;vy=5.1+speed*.09;comboPoints=0;comboTricks=0;comboValue=1;board.rotation.z=0;notify('POP!')};lastSpace=space;
+  if(air){vy-=12.5*dt;skater.position.y+=vy*dt;skater.rotation.z=THREE.MathUtils.lerp(skater.rotation.z,-steer*.22,.12);if(skater.position.y<=0&&vy<0)land()}
+  else if(!grind){skater.position.y=0;skater.rotation.z=THREE.MathUtils.lerp(skater.rotation.z,-steer*.14,.12);board.rotation.z=THREE.MathUtils.lerp(board.rotation.z,-steer*.04,.12)}
+  const f=keys.f;if(f&&!lastFlux)tryFlux();lastFlux=f;
+  if(grind){grind.t+=dt;flux=Math.max(0,flux-25*dt);skater.position.x=THREE.MathUtils.lerp(skater.position.x,grind.rail.x,.28);skater.position.y=grind.rail.h-.15;skater.position.z-=speed*1.03*dt;skater.rotation.z=Math.sin(t*22)*.07;comboPoints+=Math.round(22*dt);score+=Math.round(22*dt);if(grind.t>2.6||flux<=0||Math.abs(skater.position.z-grind.rail.z)>grind.rail.len/2+.5){grind=null;vy=1.4;air=true;notify('FLUX RELEASE!')}}else if(!air)flux=Math.min(100,flux+12*dt);
+  // Prism collection and checkpoint finish.
+  for(const o of tags)if(!o.got&&skater.position.distanceTo(o.group.position)<1.55){o.got=true;o.group.visible=false;tagsGot++;score+=350;$('tags').children[tagsGot-1]?.classList.add('got');notify('SIGNAL TAG +350');$('flash').classList.remove('on');void $('flash').offsetWidth;$('flash').classList.add('on')}
+  if(skater.position.z<-109){if(tagsGot===5&&score>=2500)endGame(true);else if(tagsGot<5)endGame(false);else notify('NEED 2,500 PTS TO CLEAR')}
+  if(toastTimer>0){toastTimer-=dt;if(toastTimer<=0)$('toast').classList.remove('show')}
+ }
+ // Camera tracks the skater with a slight look-ahead; scene remains fully 3D.
+ const desired=new THREE.Vector3(skater.position.x*.42,5.25,skater.position.z+10.5);camera.position.lerp(desired,.075);camera.lookAt(skater.position.x*.5,1.05,skater.position.z-4.4);
+ $('score').textContent=String(score).padStart(6,'0');$('timer').textContent=String(Math.ceil(timeLeft)).padStart(2,'0');$('fluxFill').style.width=flux+'%';$('fluxLabel').textContent=grind?'LATCHED':flux<18?'CHARGING':Math.round(flux)+'%';$('subobjective').textContent=`${tagsGot} / 5 PRISM TAGS · HIT 2,500 PTS`;
+ if(tagsGot===5&&score>=2500)$('objective').textContent='FIND THE EXIT';else $('objective').textContent='TAG THE SIGNAL';
+ renderer.render(scene,camera);
+}
+skater.position.set(0,0,2);skater.rotation.y=Math.PI;camera.position.set(0,6,12);camera.lookAt(0,1,-2);frame();
+window.addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)});
+</script></body></html>
