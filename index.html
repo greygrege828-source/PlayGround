@@ -104,8 +104,8 @@
         </section>
         <section class="tab-content hidden" id="ownerTab">
           <div class="access-note owner-note"><span>✦</span><p><b>Owner’s oven</b><br>Enter the bakery’s secret code to unlock.</p></div>
-          <form class="code-form" id="codeForm"><label for="ownerCode">OWNER ACCESS CODE</label><div class="code-field"><span>✦</span><input id="ownerCode" type="password" inputmode="numeric" maxlength="8" placeholder="••••" autocomplete="off"><button type="submit">UNLOCK ↗</button></div><small id="codeMessage">Your secret stays on this device.</small></form>
-          <div class="owner-locked" id="ownerLocked"><div class="lock-big">♙</div><b>Four little numbers.</b><span>Only the bakery owner knows them.</span></div>
+          <form class="code-form" id="codeForm"><label for="ownerCode">OWNER ACCESS CODE</label><div class="code-field"><span>✦</span><input id="ownerCode" type="password" maxlength="32" placeholder="Secret code" autocomplete="off"><button type="submit">UNLOCK ↗</button></div><small id="codeMessage">Your secret stays on this device.</small></form>
+          <div class="owner-locked" id="ownerLocked"><div class="lock-big">♙</div><b>A secret code.</b><span>Only the bakery owner knows it.</span></div>
           <div class="owner-controls hidden" id="ownerControls"><div class="owner-unlocked"><span>✦</span><div><b>Welcome back, owner.</b><small>Big bakery powers are yours.</small></div></div>
             <p class="eyebrow command-section-title">BIG COMMANDS</p>
             <button class="owner-command" data-owner="bonus"><span class="owner-command-icon">＋</span><span><b>Royal reserve</b><small>Add 10,000 cookies to the jar</small></span><i>↗</i></button>
